@@ -435,7 +435,7 @@ include 'roverBodyLinkSection.php';
             var distance=snap.child("tripDistance").val();
             totaldistance+=distance;
         });
-        document.getElementById('userDistanceValue').innerHTML = totaldistance + " Km";
+        document.getElementById('userDistanceValue').innerHTML = totaldistance.toFixed(2) + " Km";
     });
 
 </script>

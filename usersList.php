@@ -24,7 +24,7 @@ if (!isset($_SESSION['username'])) {
             var userColumnElement = "<div class='col-lg-3 col-xs-6'>\
                 <div class='small-box bg-aqua'>\
                 <div class='inner'>\
-                <h3 style='font-size: 27px'>" + usersData[user]['username'].split(' ')[0] + "</h3>\
+                <h3 style='font-size: 27px'>" + usersData[user]['username'] + "</h3>\
                 <br/>\
                 <br/>\
                 <br/>\
