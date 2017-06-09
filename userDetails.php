@@ -428,77 +428,15 @@ include 'roverBodyLinkSection.php';
         document.getElementById('userAvgSpeedValue').innerHTML = avgSpeed.toFixed(2) + " Kmph";
         document.getElementById('userMaxSpeedValue').innerHTML = maxSpeed + " Kmph";
     });
-
-    // Display the heat map of a single user
-    var brake = [], speed = [];
-    database.ref().child('tripSpeeding/' + uid + '/').once('value').then(function (snapshot) {
-        snapshot.forEach(function (snap) {
-            var json = snap.val();
-            var key;
-            for (var field in json) {
-                key = field;
-                var jkey = json[key];
-                var factor = json[key]["factor"];
-                if (factor != null) {
-                    for (var field1 in jkey) {
-                        var jkey1 = field1;
-                        var lat = jkey[jkey1]["latitude"];
-                        var long = jkey[jkey1]["longitude"];
-                        if (jkey[jkey1]["latitude"] != null && jkey[jkey1]["longitude"] != null) {
-                            if (factor == "vhb" || factor == "hb" || factor == "b") {
-                                brake.push(new google.maps.LatLng(lat, long));
-                            }
-                            else if (factor == "vhs" || factor == "hs" || factor == "s") {
-                                speed.push(new google.maps.LatLng(lat, long));
-                            }
-                            else {
-                                //do nothing
-                            }
-                        }
-                    }
-                }
-            }
+    var totaldistance=0;
+    firebase.database().ref().child('trips/'+uid+'/').once('value').then(function(snapshot) {
+        var total=0,count=0,avg=0,maxspeed=0;
+        snapshot.forEach(function(snap){
+            var distance=snap.child("tripDistance").val();
+            totaldistance+=distance;
         });
-        console.log("data is.." + brake + " " + speed);
-        loadspeedMap(speed);
-        loadbrakeMap(brake);
+        document.getElementById('userDistanceValue').innerHTML = totaldistance + " Km";
     });
-
-
-    var gradients = {
-        red: [
-            'rgba(255, 0, 0, 0)',
-            'rgba(255, 0, 0, 1)'
-        ],
-        green: [
-            'rgba(0, 255, 0, 0)',
-            'rgba(0, 255, 0, 1)'
-        ],
-        blue: [
-            'rgba(0, 0, 255, 0)',
-            'rgba(0, 0, 255, 1)'
-        ]
-    };
-    function loadspeedMap(txData) {
-        heatmap = new google.maps.visualization.HeatmapLayer({
-            data: txData,            //txData,
-            radius: 20,
-            opacity: 10,
-            map: map1
-        });
-        heatmap.set('gradient', gradients['green']);
-        heatmap.setMap(map1);
-    }
-    function loadbrakeMap(txData) {
-        heatmap = new google.maps.visualization.HeatmapLayer({
-            data: txData,            //txData,
-            radius: 20,
-            opacity: 10,
-            map: map1
-        });
-        heatmap.set('gradient', gradients['blue']);
-        heatmap.setMap(map1);
-    }
 
 </script>
 
