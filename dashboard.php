@@ -80,10 +80,12 @@ if (!isset($_SESSION['username'])) {
         firebase.database().ref("/users/" + homes[0].id + "/").once('value').then(function (data) {
             var userNameSafe = data.child('username').val();
             updateSafeDriverPlaceHolder(userNameSafe.split(' ')[0]);
+            document.getElementById("safedriver_info").href="userDetails.php?uid="+homes[0].id;
         });
         firebase.database().ref("/users/" + homes[cnt - 1].id + "/").once('value').then(function (data) {
             var userNameUnSafe = data.child('username').val();
             updateUnSafeDriverPlaceHolder(userNameUnSafe.split(' ')[0]);
+            document.getElementById("rashdriver_info").href="userDetails.php?uid="+homes[cnt-1].id;
         });
     }
 </script>
@@ -122,7 +124,7 @@ if (!isset($_SESSION['username'])) {
                         <div class="icon">
                             <i class="ion ion-person"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer" id="safedriver_info">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -137,7 +139,7 @@ if (!isset($_SESSION['username'])) {
                         <div class="icon">
                             <i class="ion ion-person"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer" id="rashdriver_info">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -152,7 +154,7 @@ if (!isset($_SESSION['username'])) {
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="usersList.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -167,7 +169,7 @@ if (!isset($_SESSION['username'])) {
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="tripsTimeline.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -185,7 +187,7 @@ if (!isset($_SESSION['username'])) {
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
+                                            class="fa fa-minus"></i>
                                 </button>
                             </div>
                         </div>
