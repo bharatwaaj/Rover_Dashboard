@@ -73,11 +73,11 @@ if (isset($_GET['uid'])) {
                     <div class="box box-widget widget-user">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-black"
-                             style="background: url('dist/img/photo1.png') center center;">
+                             style="background: url('dist/img/photo1.png') center center; height: 190px;">
                             <h3 class="widget-user-username" id="userNameDetailPage"></h3>
                             <h5 class="widget-user-desc" id="emailDetailPage"></h5>
                         </div>
-                        <div class="widget-user-image">
+                        <div class="widget-user-image" style="padding-top: 70px">
                             <img class="img-circle" src="dist/img/avatar04.png" alt="User Avatar">
                         </div>
                         <div class="box-footer">
@@ -113,6 +113,48 @@ if (isset($_GET['uid'])) {
                     <!-- /.widget-user -->
                 </div>
                 <!-- /.col -->
+
+
+                <!-- Calendar -->
+                <div class="col-md-6">
+                    <div class="box box-solid bg-green-gradient">
+                        <div class="box-header">
+                            <i class="fa fa-calendar"></i>
+
+                            <h3 class="box-title">Trips Calendar</h3>
+                            <!-- tools box -->
+                            <div class="pull-right box-tools">
+                                <!-- button with a dropdown -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success btn-sm dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <i class="fa fa-bars"></i></button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Add new event</a></li>
+                                        <li><a href="#">Clear events</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">View calendar</a></li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i
+                                        class="fa fa-times"></i>
+                                </button>
+                            </div>
+                            <!-- /. tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <!--The calendar -->
+                            <div id="trips-calendar" style="width: 100%;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -142,6 +184,9 @@ if (isset($_GET['uid'])) {
                         <div class="box-header">
                             <!-- tools box -->
                             <div class="pull-right box-tools">
+                                <button type="button" id="trip-date-picker-map" class="btn btn-primary btn-sm pull-right"
+                                        data-toggle="tooltip" title="Date">
+                                    <i class="fa fa-calendar"></i></button>
                                 <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
                                         data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
                                     <i class="fa fa-minus"></i></button>
@@ -166,9 +211,6 @@ if (isset($_GET['uid'])) {
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    
-                </div>
             </div>
         </section>
         <!-- /.content -->
@@ -191,6 +233,25 @@ include 'roverBodyLinkSection.php';
 
 <script type="text/javascript">
 
+    // On Page Load - Date Pickers
+    $("#trips-calendar").datepicker();
+
+    $('#trip-date-picker-map').daterangepicker({
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment()
+    }, function (start, end) {
+        window.alert("You chose: " + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    });
+
+    // To draw line chart
     function drawLineChart(braking, speeding) {
         var brakingArray = [], speedingArray = [];
         for (var i = 0; i < braking.length; i++) {
@@ -361,7 +422,7 @@ include 'roverBodyLinkSection.php';
             count += subcount;
         });
         avgSpeed = total / count;
-        if(isNaN(avgSpeed)){
+        if (isNaN(avgSpeed)) {
             document.getElementById('userAvgSpeedValue').innerHTML = 0 + " Kmph";
         }
         document.getElementById('userAvgSpeedValue').innerHTML = avgSpeed.toFixed(2) + " Kmph";
@@ -369,34 +430,28 @@ include 'roverBodyLinkSection.php';
     });
 
     // Display the heat map of a single user
-    var brake = [],speed = [];
-    database.ref().child('tripSpeeding/'+uid+'/').once('value').then(function(snapshot) {
-        snapshot.forEach(function(snap){
+    var brake = [], speed = [];
+    database.ref().child('tripSpeeding/' + uid + '/').once('value').then(function (snapshot) {
+        snapshot.forEach(function (snap) {
             var json = snap.val();
             var key;
             for (var field in json) {
                 key = field;
                 var jkey = json[key];
-                var factor=json[key]["factor"];
-                if(factor!=null)
-                {
-                    for(var field1 in jkey)
-                    {
-                        var jkey1=field1;
-                        var lat=jkey[jkey1]["latitude"];
-                        var long=jkey[jkey1]["longitude"];
-                        if(jkey[jkey1]["latitude"]!=null&&jkey[jkey1]["longitude"]!=null)
-                        {
-                            if(factor=="vhb"||factor=="hb"||factor=="b")
-                            {
+                var factor = json[key]["factor"];
+                if (factor != null) {
+                    for (var field1 in jkey) {
+                        var jkey1 = field1;
+                        var lat = jkey[jkey1]["latitude"];
+                        var long = jkey[jkey1]["longitude"];
+                        if (jkey[jkey1]["latitude"] != null && jkey[jkey1]["longitude"] != null) {
+                            if (factor == "vhb" || factor == "hb" || factor == "b") {
                                 brake.push(new google.maps.LatLng(lat, long));
                             }
-                            else if(factor=="vhs"||factor=="hs"||factor=="s")
-                            {
+                            else if (factor == "vhs" || factor == "hs" || factor == "s") {
                                 speed.push(new google.maps.LatLng(lat, long));
                             }
-                            else
-                            {
+                            else {
                                 //do nothing
                             }
                         }
@@ -404,7 +459,7 @@ include 'roverBodyLinkSection.php';
                 }
             }
         });
-        console.log("data is.."+brake+" "+speed);
+        console.log("data is.." + brake + " " + speed);
         loadspeedMap(speed);
         loadbrakeMap(brake);
     });
@@ -424,7 +479,7 @@ include 'roverBodyLinkSection.php';
             'rgba(0, 0, 255, 1)'
         ]
     };
-    function loadspeedMap(txData){
+    function loadspeedMap(txData) {
         heatmap = new google.maps.visualization.HeatmapLayer({
             data: txData,            //txData,
             radius: 20,
@@ -434,7 +489,7 @@ include 'roverBodyLinkSection.php';
         heatmap.set('gradient', gradients['green']);
         heatmap.setMap(map1);
     }
-    function loadbrakeMap(txData){
+    function loadbrakeMap(txData) {
         heatmap = new google.maps.visualization.HeatmapLayer({
             data: txData,            //txData,
             radius: 20,
