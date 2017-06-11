@@ -1,4 +1,10 @@
+<?php
+if (isset($_GET['uid'])) {
+    $uid = $_GET['uid'];
+}
+?>
 <script type="text/javascript">
+    var uid = '<?php echo $uid ?>';
 //    document.getElementById('userIdDashboardSidebar').innerHTML = 'Admin';
 </script>
 <!-- Left side column. contains the logo and sidebar -->
@@ -19,6 +25,11 @@
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li>
+                <a href="dashboard.php">
+                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
                 <a href="usersList.php">
                     <i class="fa fa-users"></i> <span>Users</span>
                     <small class="label pull-right bg-green">new</small>
@@ -31,14 +42,15 @@
                 </a>
             </li>
             <li>
-                <a href="tripsTimeline.php">
-                    <i class="fa fa-automobile"></i> <span>Timeline</span>
-                </a>
-            </li>
-            <li>
                 <a href="calendar.php">
                     <i class="fa fa-calendar"></i> <span>Calendar</span>
                     <small class="label pull-right bg-red">3</small>
+                </a>
+            </li>
+            <li>
+                <a href="tripsTimeline.php" onclick="location.href=this.href+'?uid='+uid;return false;">
+                    <i class="fa fa-line-chart"></i> <span>Timeline</span>
+                    <small class="label pull-right bg-red">beta</small>
                 </a>
             </li>
         </ul>

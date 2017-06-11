@@ -24,8 +24,10 @@ if (isset($_GET['uid'])) {
     database.ref("/users/" + uid + "/").once('value').then(function (data) {
         email = data.child('email').val();
         username = data.child('username').val();
+        workplace = data.child('workPlace').val();
         document.getElementById("userNameDetailPage").innerHTML = username;
         document.getElementById("emailDetailPage").innerHTML = email;
+        document.getElementById("organization").innerHTML = workplace;
     });
 
     // Braking and Speeding Patterns
@@ -73,14 +75,41 @@ if (isset($_GET['uid'])) {
                     <div class="box box-widget widget-user">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-black"
-                             style="background: url('dist/img/photo1.png') center center; height: 190px;">
+                             style="background: url('dist/img/photo1.png') center center; height: 132px;">
                             <h3 class="widget-user-username" id="userNameDetailPage"></h3>
                             <h5 class="widget-user-desc" id="emailDetailPage"></h5>
                         </div>
-                        <div class="widget-user-image" style="padding-top: 70px">
+                        <div class="widget-user-image" style="padding-top: 40px">
                             <img class="img-circle" src="dist/img/avatar04.png" alt="User Avatar">
                         </div>
                         <div class="box-footer">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Organization</h5>
+                                        <span class="description-text" id="organization"></span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header"></h5>
+                                        <span class="description-text"></span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Points Gained</h5>
+                                        <span class="description-text" id="points">150</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
                             <div class="row">
                                 <div class="col-sm-4 border-right">
                                     <div class="description-block">
@@ -107,7 +136,7 @@ if (isset($_GET['uid'])) {
                                 </div>
                                 <!-- /.col -->
                             </div>
-                            <!-- /.row -->
+                            <!--/.row-->
                         </div>
                     </div>
                     <!-- /.widget-user -->

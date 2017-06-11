@@ -25,7 +25,7 @@ if (!isset($_SESSION['username'])) {
                 <div class='small-box bg-aqua'>\
                 <div class='inner'>\
                 <h3 style='font-size: 27px'>" + usersData[user]['username'] + "</h3>\
-                <br/>\
+                <small class='label pull-left bg-green'>" + usersData[user]['workPlace'] + "</small><br/>\
                 <br/>\
                 <br/>\
                 </div>\
