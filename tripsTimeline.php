@@ -160,7 +160,7 @@ else{
                 <div class='timeline-body'>" + GetAddress(destinationlat,destinationlng,'destiny') + "<span id='destiny'></span></div>\
             </div>\
             </li></ul></div>";
-                    $("#tripsoutput").append(element);
+            $("#tripsoutput").append(element);
         }
     </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -173,18 +173,19 @@ else{
                 geocoder.geocode({'latLng': latlng}, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         if (results[1]) {
-                            document.getElementById(id).innerHTML=results[0].formatted_address;
+                            if(results[0].formatted_address!=null) {
+                                document.getElementById(id).innerHTML = results[0].formatted_address;
+                            }
+                            else{
+                                document.getElementById(id).innerHTML=" ";
+                                }
                         }
                         else{
                             document.getElementById(id).innerHTML=" ";
                         }
                     }
-                    else{
-                        document.getElementById(id).innerHTML=" ";
-                    }
                 });
             }
         </script>
-
 </body>
 </html>
