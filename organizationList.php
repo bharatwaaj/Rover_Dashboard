@@ -10,7 +10,7 @@ if (!isset($_SESSION['username'])) {
     header("location: index.php");
 }
 if(isset($_POST['disqbutton'])){
-    if($_POST['passworddisq']=="disq")
+    if($_POST['passworddisq']=="disqroverio123")
     header("location: usersList.php?organization=DISQ");
 }
 if(isset($_POST['ashokabutton'])){
