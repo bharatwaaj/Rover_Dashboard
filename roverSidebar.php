@@ -30,7 +30,7 @@ if (isset($_GET['uid'])) {
                 </a>
             </li>
             <li>
-                <a href="usersList.php">
+                <a href="organizationList.php">
                     <i class="fa fa-users"></i> <span>Users</span>
                     <small class="label pull-right bg-green">new</small>
                 </a>

@@ -9,9 +9,18 @@ session_start();
 if (!isset($_SESSION['username'])) {
     header("location: index.php");
 }
+if(isset($_POST['disqbutton'])){
+    if($_POST['passworddisq']=="disq")
+    header("location: usersList.php?organization=DISQ");
+}
+if(isset($_POST['ashokabutton'])){
+    if($_POST['passwordashoka']=="ashoka")
+    header("location: usersList.php?organization=Ashoka");
+}
 ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
+<form action="" method="POST">
 <div class="wrapper">
 
     <!-- START HEADER BAR -->
@@ -60,8 +69,11 @@ if (!isset($_SESSION['username'])) {
                                 <li class="list-group-item">
                                     <b>No of Trips</b> <a class="pull-right">80</a>
                                 </li>
+                                <li class="list-group-item">
+                                    <b>Password</b> <a class="pull-right"><input type="password" name="passworddisq" placeholder="Password"></a>
+                                </li>
                             </ul>
-                            <a href="usersList.php?organization=disq" class="btn btn-primary btn-block"><b>Show Users</b></a>
+                            <button class="btn btn-primary btn-block" name="disqbutton"><b>Show Users</b></button>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -84,8 +96,11 @@ if (!isset($_SESSION['username'])) {
                                 <li class="list-group-item">
                                     <b>No of Trips</b> <a class="pull-right">64</a>
                                 </li>
+                                <li class="list-group-item">
+                                    <b>Password</b> <a class="pull-right"><input type="password" name="passwordashoka" placeholder="Password"></a>
+                                </li>
                             </ul>
-                            <a href="usersList.php?organization=disq" class="btn btn-primary btn-block"><b>Show Users</b></a>
+                            <button class="btn btn-primary btn-block" name="ashokabutton"><b>Show Users</b></button>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -108,7 +123,7 @@ if (!isset($_SESSION['username'])) {
 <?php
 include 'roverBodyLinkSection.php';
 ?>
-
+</form>
 </body>
 </html>
 
