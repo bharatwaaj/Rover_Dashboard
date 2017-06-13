@@ -70,7 +70,7 @@ if (!isset($_SESSION['username'])) {
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0.0
+            <b>Version</b> 2.1.1
         </div>
         <strong>Copyright &copy; 2017-2018 <a href="#">Rover</a>.</strong> All rights
         reserved.

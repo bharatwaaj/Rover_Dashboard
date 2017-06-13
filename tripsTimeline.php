@@ -156,7 +156,7 @@ else{
             <i class='fa fa-map-marker bg-yellow'></i>\
                 <div class='timeline-item'>\
                 <span class='time'><i class='fa fa-clock-o'>  "+ timeDifference(currentTimestamp*1000,tripendtime*1000) +"</i></span>\
-            <h3 class='timeline-header'><a href='#'>" + destination + "</a></h3>\
+                <h3 class='timeline-header'><a href='#'>" + destination + "</a></h3>\
                 <div class='timeline-body'>" + GetAddress(destinationlat,destinationlng,'destiny') + "<span id='destiny'></span></div>\
             </div>\
             </li></ul></div>";
