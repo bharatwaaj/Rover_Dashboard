@@ -28,8 +28,6 @@ if(isset($_POST['ashokabutton'])){
     include 'roverHeader.php';
     ?>
     <!-- END HEADER BAR -->
-
-
     <!-- START SIDE BAR -->
     <?php
     include 'roverSidebar.php';

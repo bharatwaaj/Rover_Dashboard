@@ -53,6 +53,11 @@ if (isset($_GET['uid'])) {
                     <small class="label pull-right bg-red">beta</small>
                 </a>
             </li>
+            <li>
+                <a href="leaderboard.php">
+                    <i class="fa fa-mortar-board"></i> <span>Leaderboard</span>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
