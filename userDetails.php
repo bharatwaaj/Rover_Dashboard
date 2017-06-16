@@ -247,7 +247,7 @@ if (isset($_GET['uid'])) {
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0.0
+            <b>Version</b> 3.0
         </div>
         <strong>Copyright &copy; 2017-2018 <a href="#">Rover</a>.</strong> All rights
         reserved.
@@ -278,6 +278,21 @@ include 'roverBodyLinkSection.php';
         endDate: moment()
     }, function (start, end) {
         window.alert("You chose: " + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    });
+
+    var date1 = new Date(2017, 6, 6);
+    var date2 = new Date(2017, 6, 17);
+
+    $(document).ready(function () {
+        $('#trips-calendar').datepicker({
+            beforeShowDay: function (date) {
+                debugger
+                if (date >= date1 && date <= date2) {
+                    return [true, 'ui-state-error', 'tooltipText'];
+                }
+                return [true, '', ''];
+            }
+        });
     });
 
     // To draw line chart

@@ -25,7 +25,24 @@ if (isset($_GET['organization'])) {
 
         // Update Users Data
         for (user in usersData) {
-            if(usersData[user]['workPlace']==organization) {
+            if(usersData[user]['Organisation Name']==organization) {
+                var userColumnElement = "<div class='col-lg-3 col-xs-6'>\
+                <div class='small-box bg-aqua'>\
+                <div class='inner'>\
+                <h3 style='font-size: 27px'>" + usersData[user]['username'] + "</h3>\
+                <small class='label pull-left bg-green'>" + usersData[user]['Organisation Name'] + "</small><br/>\
+                <br/>\
+                <br/>\
+                </div>\
+                <div class='icon'>\
+                <i class='fa fa-user'></i>\
+                </div>\
+                <a href='userDetails.php?uid=" + user + "' class='small-box-footer'>More info <i class='fa fa-arrow-circle-right'></i></a>\
+                </div>\
+                </div>";
+                $("#usersListRow").append(userColumnElement);
+            }
+            else if(usersData[user]['workPlace']==organization) {
                 var userColumnElement = "<div class='col-lg-3 col-xs-6'>\
                 <div class='small-box bg-aqua'>\
                 <div class='inner'>\
@@ -76,7 +93,7 @@ if (isset($_GET['organization'])) {
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 2.1.1
+            <b>Version</b> 3.0
         </div>
         <strong>Copyright &copy; 2017-2018 <a href="#">Rover</a>.</strong> All rights
         reserved.

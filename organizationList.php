@@ -109,7 +109,7 @@ if(isset($_POST['ashokabutton'])){
     </div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 2.1.1
+            <b>Version</b> 3.0
         </div>
         <strong>Copyright &copy; 2017-2018 <a href="#">Rover</a>.</strong> All rights
         reserved.
