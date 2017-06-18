@@ -40,14 +40,42 @@ if (!isset($_SESSION['username'])) {
 
     // Trips Count Update
     var tripsReference = database.ref("trips");
-    var tripslength = 0;
-    function updateTripsCount(objectLength) {
-        document.getElementById("total-trips").innerHTML = objectLength;
+    var onlineUserslength = 0;
+    function updateOnlineUsersCount(objectLength) {
+        document.getElementById("online-users").innerHTML = objectLength;
     }
-    tripsReference.on("child_added", function (snapshot) {
-        tripslength += ObjectLength(snapshot.val());
-        updateTripsCount(tripslength);
+    function timeDifference(current, previous) {
+        return (current - previous);
+    }
+    if (!Date.now) {
+        Date.now = function() { return new Date().getTime(); }
+    }
+    var currentTime=Math.floor(Date.now() / 1000);
+    firebase.database().ref().child('tripRoute').once('value').then(function (snapshot) {
+        snapshot.forEach(function (snap) {
+            var coordinateData = [];
+            var json = snap.val();
+            var key,jkey1;
+            for (var field in json) {
+                key = field;
+                var jkey = json[key];
+                for (var field1 in jkey) {
+                    jkey1 = field1;
+                }
+                var difference=timeDifference(currentTime,jkey1);
+                if(difference<=3200){
+                    onlineUserslength++;
+                }
+            }
+        });
+        updateOnlineUsersCount(onlineUserslength);
     });
+
+    /*tripsReference.on("child_added", function (snapshot) {
+
+     onlineUserslength += ObjectLength(snapshot.val());
+     updateOnlineUsersCount(onlineUserslength);
+     });*/
 
     // Safe And Unsafe Rider Update
     function updateSafeDriverPlaceHolder(text) {
@@ -80,12 +108,12 @@ if (!isset($_SESSION['username'])) {
         firebase.database().ref("/users/" + homes[0].id + "/").once('value').then(function (data) {
             var userNameSafe = data.child('username').val();
             updateSafeDriverPlaceHolder(userNameSafe.split(' ')[0]);
-            document.getElementById("safedriver_info").href="userDetails.php?uid="+homes[0].id;
+            document.getElementById("safedriver_info").href = "userDetails.php?uid=" + homes[0].id;
         });
         firebase.database().ref("/users/" + homes[cnt - 1].id + "/").once('value').then(function (data) {
             var userNameUnSafe = data.child('username').val();
             updateUnSafeDriverPlaceHolder(userNameUnSafe.split(' ')[0]);
-            document.getElementById("rashdriver_info").href="userDetails.php?uid="+homes[cnt-1].id;
+            document.getElementById("rashdriver_info").href = "userDetails.php?uid=" + homes[cnt - 1].id;
         });
     }
 </script>
@@ -124,7 +152,8 @@ if (!isset($_SESSION['username'])) {
                         <div class="icon">
                             <i class="ion ion-person"></i>
                         </div>
-                        <a href="#" class="small-box-footer" id="safedriver_info">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer" id="safedriver_info">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -139,7 +168,8 @@ if (!isset($_SESSION['username'])) {
                         <div class="icon">
                             <i class="ion ion-person"></i>
                         </div>
-                        <a href="#" class="small-box-footer" id="rashdriver_info">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer" id="rashdriver_info">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -154,7 +184,8 @@ if (!isset($_SESSION['username'])) {
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="usersList.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="organizationList.php" class="small-box-footer">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -162,14 +193,15 @@ if (!isset($_SESSION['username'])) {
                     <!-- small box -->
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3 id="total-trips"></h3>
+                            <h3 id="online-users"></h3>
 
-                            <p>Total trips</p>
+                            <p>Online Users</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="tripsTimeline.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="onlineUsersList.php" class="small-box-footer">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
